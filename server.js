@@ -1,7 +1,15 @@
-var express = require("express");
-var app = express();
-var path = require("path");
+//Install express server
+const express = require("express");
+const path = require("path");
 
-app.use(express.static(path.join(__dirname, "build"))); // <-- this is pointing to your static html, css and js files
+const app = express();
 
-app.listen(process.env.PORT || 80);
+// Serve only the static files form the dist directory
+app.use(express.static(__dirname + "/dist/vok-projext"));
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname + "/dist/vok-projext/index.html"));
+});
+
+// Start the app by listening on the default Heroku port
+app.listen(process.env.PORT || 8080);
